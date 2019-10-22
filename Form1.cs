@@ -108,5 +108,24 @@ namespace WindowsFormsApp9
                 MessageBox.Show("删除失败");
             }
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string path = textBox1.Text;
+            FileStream filestream = new FileStream(path, FileMode.Open);
+            byte[] bt = new byte[filestream.Length];
+            filestream.Read(bt, 0, bt.Length);
+            string base64Str = Convert.ToBase64String(bt);
+
+            filestream.Close();
+            string FileName = textBox2.Text;
+            using (FileStream fileStream = File.Create(FileName))
+            {
+                byte[] bytes = new UTF8Encoding(true).GetBytes(richTextBox1.Text);
+                fileStream.Write(bytes, 0, bytes.Length);
+                fileStream.Close();
+            }
+
+        }
     }
 }
